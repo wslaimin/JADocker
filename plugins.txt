@@ -1,0 +1,5 @@
+git:latest
+gradle:latest
+envinject:latest
+postbuild-task:latest
+thinBackup:latest

@@ -1,0 +1,53 @@
+#!/bin/bash
+echo 'post success'
+# Android CI Shell Home
+source $ACIS_HOME/decode
+
+head=$1
+debug=$2
+commitMsg=$3
+tester=$4
+
+{
+    tag=$(git tag --points-at $head)
+} || {}
+if [ -z "$tag" ]; then
+    tag=$head
+fi
+path=$(find . -type f -name '*.apk')
+dir=''
+name=''
+url=''
+json=''
+type=''
+if $($debug); then
+    dir=$APK_DIR/$JOB_NAME/debug/$tag
+    name=$tag-debug.apk
+    # web取apk目录为/Users/addcn/pack/build/app
+    url=/app/$JOB_NAME/debug/$tag/$tag-debug.apk
+    json=$dir/json/$tag-debug.json
+    type=debug
+else
+    dir=$APK_DIR/$JOB_NAME/release/$tag
+    name=$tag-release.apk
+    url=/app/$JOB_NAME/release/$tag/$tag-release.apk
+    json=$dir/json/$tag-release.json
+    type=release
+fi
+
+mkdir -p $dir
+mkdir -p $dir/json
+mv $path $dir/$name
+
+if [ -e $json ]
+then
+    > $json
+fi
+
+# curl encode
+#commitMsg=$(urldecode $commitMsg)
+msg="$commitMsg\nhttps://dl.8891.app"
+time=$(date +'%Y-%m-%d %H:%M:%S')
+echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$tag\",\"date\":\"$time\",\"git_sha1\":\"$head\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$commitMsg\"}" > $json
+
+$ACIS_HOME/send $tester "$msg"

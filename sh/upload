@@ -1,0 +1,14 @@
+#!/bin/bash
+head=$1
+googleKey=$2
+pakabeName=$3
+version=0.0.0
+tag=''
+{
+    tag=$(git git tag --points-at $head)
+} || {}
+if [ -n "$tag" ];then
+    version=$tag
+fi
+apk=$APK_DIR/$JOB_NAME/release/$tag/$tag-release.apk
+java -cp $ACIS_HOME/android-publish.jar MyUploadApkToDraft $googleKey $pakabeName $apk $version
