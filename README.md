@@ -7,7 +7,7 @@ Jenkins with Android enviroment docker image.This image is for addcn.
 Build image.
 
 ```
-docker build -t jenkins/addcn https://github.com/wslaimin/raw/addcn/JADocker.git
+docker build -t jenkins/addcn https://github.com/wslaimin/JADocker.git#addcn
 ```
 
 ## Step 2
