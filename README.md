@@ -30,7 +30,7 @@ docker exec -it jenkins /bin/bash
 Download build tools and platform that your project use.For example:
 
 ```
-docker sdkmanager "build-tools;27.0.3" "platforms;android-27"
+sdkmanager "build-tools;27.0.3" "platforms;android-27"
 ```
 
 ## Step 4
