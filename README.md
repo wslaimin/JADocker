@@ -3,14 +3,16 @@ Jenkins with Android enviroment docker image.This image is for addcn.
 
 # Usage
 
-## Step 1 
+## Step 1
+[Install git lfs](https://git-lfs.github.com/)
+## Step 2 
 Build image.
 
 ```
 docker build -t jenkins/addcn https://github.com/wslaimin/JADocker.git#addcn
 ```
 
-## Step 2
+## Step 3
 Create and run container.You must mount a host directory like ```/JADocker/jenkins_home``` as jenkins home.
 
 ```
@@ -20,7 +22,7 @@ docker run --name jenkins -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 5
 > Replace jenkins_home to host directory.
 
 
-## Step 3
+## Step 4
 Get into container.
 
 ```
@@ -33,7 +35,7 @@ Download build tools and platform that your project use.For example:
 sdkmanager "build-tools;27.0.3" "platforms;android-27"
 ```
 
-## Step 4
+## Step 5
 Browser visits localhost:8080.<br/>
 Enjoy it,now!
 
