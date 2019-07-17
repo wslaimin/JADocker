@@ -57,12 +57,12 @@ DEVELOPER=10528
 TESTER=10528</propertiesContent>
         <secureGroovyScript plugin="script-security@1.60">
           <script>def WHERE_HEAD=&apos;&apos;
-if ( &quot;$commitId&quot; ){
-    WHERE_HEAD=&quot;$commitId&quot;
-}else if ( &quot;$tag&quot; ){
+if ( &quot;$tag&quot; ){
     WHERE_HEAD=&quot;refs/tags/$tag&quot;
-}else if( &quot;$branch&quot; ){
+}else if ( &quot;$branch&quot; ){
     WHERE_HEAD=&quot;refs/heads/$branch&quot;
+}else if( &quot;$commitId&quot; ){
+    WHERE_HEAD=&quot;$commitId&quot;
 }
 
 if(&quot;$WHERE_HEAD&quot;){
