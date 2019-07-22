@@ -48,14 +48,14 @@
 GOOGLE_KEY=&apos;&apos;
 
 # 包名
-PACKAGE_NAME=com.addcn.car8891
+PACKAGE_NAME=
 
 # 开发工号
-DEVELOPER=10528
+DEVELOPER=
 
 # 测试工号
-TESTER=10528</propertiesContent>
-        <secureGroovyScript plugin="script-security@1.60">
+TESTER=</propertiesContent>
+        <secureGroovyScript plugin="script-security@1.61">
           <script>def WHERE_HEAD=&apos;&apos;
 if ( &quot;$tag&quot; ){
     WHERE_HEAD=&quot;refs/tags/$tag&quot;
@@ -80,11 +80,10 @@ if(&quot;$WHERE_HEAD&quot;){
       <overrideBuildParameters>false</overrideBuildParameters>
     </EnvInjectJobProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.1">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>http://code.addcn.com/8891/AndroidCar8891.git</url>
         <credentialsId>c1db3d89-d4da-4fc3-9d52-b1ce1cd63e02</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -105,13 +104,7 @@ if(&quot;$WHERE_HEAD&quot;){
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo &quot;上个命令$?&quot;
-if $($publish)
-then
-	$ACIS_HOME/upload $WHERE_HEAD $GOOGLE_KEY $PACKAGE_NAME
-else
-    $ACIS_HOME/build $debug
-fi</command>
+      <command>$ACIS_HOME/build $debug</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -126,7 +119,7 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>$ACIS_HOME/postSuccess $WHERE_HEAD $debug $message $TESTER</script>
+          <script>$ACIS_HOME/postSuccess $WHERE_HEAD $publish $debug $message $TESTER $DEVELOPER $GOOGLE_KEY $PACKAGE_NAME</script>
         </hudson.plugins.postbuildtask.TaskProperties>
         <hudson.plugins.postbuildtask.TaskProperties>
           <logTexts>
@@ -170,9 +163,7 @@ fi</command>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>msg=&quot;$commitId has no tag&quot;&#xd;
-&#xd;
-$ACIS_HOME/send $DEVELOPER &quot;$msg&quot;</script>
+          <script>$ACIS_HOME/send $DEVELOPER &quot;${WHERE_HEAD} is not exited&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
