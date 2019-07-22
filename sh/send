@@ -2,4 +2,4 @@
 who=$1
 msg=$2
 # if msg has special character like space,curl will error.Encode is necessary.
-curl -X GET -G --data-urlencode "msg=$msg" "http://eagle.591.com.tw/jalert/alert_action/57/0/$who"
+curl --data "msg=$msg" "http://eagle.591.com.tw/jalert/alert_action/57/0/$who"

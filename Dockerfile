@@ -12,4 +12,6 @@ COPY ./tools /usr/share/jenkins/ref/android/tools
 COPY ./Android模板 /usr/share/jenkins/ref/jobs/Android模板
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 
-RUN install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+RUN apt-get update \
+    && apt-get install uuid-runtime \
+    && install-plugins.sh < /usr/share/jenkins/ref/plugins.txt

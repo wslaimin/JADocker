@@ -3,4 +3,4 @@ echo 'post failed'
 
 head=$1
 developer=$2
-$ACIS_HOME/send $developer "$head build fail"
+$ACIS_HOME/send $developer "$head%20build%20fail"
