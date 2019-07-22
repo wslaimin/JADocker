@@ -18,26 +18,22 @@ else
     type=release
 fi
 
-dir=$APK_DIR/$JOB_NAME/$type/$head
+apkDir=$APK_DIR/$JOB_NAME/$type/apks
 name=$(uuidgen)
 # web取apk目录为/Users/addcn/pack/build/app
-url=/app/$JOB_NAME/$type/$head/$name.apk
-json=$dir/json/$name.json
+url=/app/$JOB_NAME/$type/apks/$name.apk
+jsonDir=$APK_DIR/$JOB_NAME/json
 
-mkdir -p $dir
-mkdir -p $dir/json
-mv $path $dir/$name.apk
-
-if [ -e $json ]; then
-    > $json
-fi
+mkdir -p $apkDir
+mkdir -p $jsonDir
+mv $path $apkDir/$name.apk
 
 time=$(date +'%Y-%m-%d %H:%M:%S')
 commitId=$(git log -1 --format=%h)
-echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$head\",\"date\":\"$time\",\"git_sha1\":\"$commitId\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$commitMsg\"}" > $json
+echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$head\",\"date\":\"$time\",\"git_sha1\":\"$commitId\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$commitMsg\"}" > $jsonDir/$name.json
 
 if $($publish); then
-    $ACIS_HOME/upload $dir/$name.apk $googleKey $packageName $head
+    $ACIS_HOME/upload $apkDir/$name.apk $googleKey $packageName $head
 else
     msg="$commitMsg%0Ahttps://dl.8891.app"
     $ACIS_HOME/send $tester $msg
