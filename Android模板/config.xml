@@ -11,23 +11,17 @@
           <description>assemableDebug or assemableRelease</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>publish</name>
+          <description>是否发布apk到google play</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>commitId</name>
           <description></description>
           <defaultValue></defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>message</name>
-          <description>构建commit信息</description>
-          <defaultValue></defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>publish</name>
-          <description>是否发布apk到google play</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>tag</name>
           <description>检出tag分支进行构建，手动构建用</description>
@@ -119,7 +113,7 @@ if(&quot;$WHERE_HEAD&quot;){
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
-          <script>$ACIS_HOME/postSuccess $WHERE_HEAD $publish $debug $message $TESTER $DEVELOPER $GOOGLE_KEY $PACKAGE_NAME</script>
+          <script>$ACIS_HOME/postSuccess $WHERE_HEAD $publish $debug $TESTER $DEVELOPER $GOOGLE_KEY $PACKAGE_NAME</script>
         </hudson.plugins.postbuildtask.TaskProperties>
         <hudson.plugins.postbuildtask.TaskProperties>
           <logTexts>

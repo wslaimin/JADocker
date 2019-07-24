@@ -4,11 +4,10 @@ echo 'post success'
 head=$1
 publish=$2
 debug=$3
-commitMsg=$4
-tester=$5
-developer=$6
-googleKey=$7
-packageName=$8
+tester=$4
+developer=$5
+googleKey=$6
+packageName=$7
 
 path=$(find . -type f -name '*.apk')
 
@@ -30,12 +29,12 @@ mv $path $apkDir/$name.apk
 
 time=$(date +'%Y-%m-%d %H:%M:%S')
 commitId=$(git log -1 --format=%h)
+commitMsg=$(git log -1 --pretty=%B)
 echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$head\",\"date\":\"$time\",\"git_sha1\":\"$commitId\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$commitMsg\"}" > $jsonDir/$name.json
 
 if $($publish); then
     $ACIS_HOME/upload $apkDir/$name.apk $googleKey $packageName $head
 else
-    msg="$commitMsg%0Ahttps://dl.8891.app"
-    $ACIS_HOME/send $tester $msg
+    $ACIS_HOME/send $tester "$commitMsg%0Ahttps://dl.8891.app"
     $ACIS_HOME/send $developer "$head%20build%20success"
 fi
