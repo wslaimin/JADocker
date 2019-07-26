@@ -30,7 +30,8 @@ mv $path $apkDir/$name.apk
 time=$(date +'%Y-%m-%d %H:%M:%S')
 commitId=$(git log -1 --format=%h)
 commitMsg=$(git log -1 --pretty=%B)
-echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$head\",\"date\":\"$time\",\"git_sha1\":\"$commitId\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$commitMsg\"}" > $jsonDir/$name.json
+esCommitMsg="${commitMsg//$'\n'/'\n'}"
+echo "{\"icon\":\"/app/$JOB_NAME/icon.png\",\"name\":\"$JOB_NAME\",\"version\":\"$head\",\"date\":\"$time\",\"git_sha1\":\"$commitId\",\"download_url\":\"$url\",\"env\":\"$type\",\"description\":\"$esCommitMsg\"}" > $jsonDir/$name.json
 
 if $($publish); then
     $ACIS_HOME/upload $apkDir/$name.apk $googleKey $packageName $head
